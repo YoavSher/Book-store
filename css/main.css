@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: blueviolet;
+    text-align: center;
+}
+
+.filter {
+    margin-bottom: 10px;
+}
+
+[name=book-search]{
+    margin-bottom: 20px;
+}
+
+.add-book {
+    margin-bottom: 10px;
+}
+
+.sort-by {
+    align-self: flex-end;
+}
+
+.main-contant {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.books-table {
+    background-color: whitesmoke;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px black solid;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+
+th {
+    border: 1px black solid;
+    padding: 3px;
+}
+
+
+td {
+    border: 1px black solid;
+    padding: 7px;
+    min-width: 111px;
+}
+
+button {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+.remove-book {
+    background-color: rgb(249, 46, 46);
+    color: whitesmoke;
+    border: 1px solid rgb(249, 46, 46);
+}
+
+.update-book {
+    background-color: rgb(235, 160, 21);
+    color: whitesmoke;
+    border: 1px solid rgb(247, 190, 85);
+}
+
+.read-book {
+    background-color: rgb(60, 60, 245);
+    color: whitesmoke;
+    border: 1px solid blue;
+}
+
+.modal {
+    position: absolute;
+    left: 150%;
+    top: 5%;
+    background-color: aquamarine;
+    height: 55vh;
+    min-width: 250px;
+    text-align: center;
+}
+
+.modal.open {
+    left: 50%;
+    transition: left .5s;
+}
+
+.close-modal {
+    float: left;
+    position: relative;
+    left: 4px;
+    top: 4px;
+}
+
+.rate {
+    position: flex;
+    align-items: center;
+}
+
+.next-page {
+    width: 96px;
+}
+
+.prev-page {
+    width: 100px;
+    padding: 3px;
+}
+
+.disabled-btn {
+    background-color: lightslategrey;
+}

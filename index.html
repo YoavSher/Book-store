@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Book Shop</title>
+</head>
+
+<body onload="onInit()">
+    <h1>Book Shop</h1>
+    <button class="add-book" onclick="onAddBook()">Create new book</button>
+    <!-- <form onsubmit="onAddBook(event)">
+        <input type="text" name="add-book" placeholder="Book's name?" />
+        <button>Add</button>
+    </form> -->
+    <section class="filter">
+        <h2>Filter</h2>
+        <form onsubmit="onSearchAdd(event)">
+            <input type="text" name="book-search" placeholder="Search Book" />
+            <button>Search</button>
+        </form>
+        <label>
+            Max Price:
+            <input type="range" min="0" max="100" value="50" class="filter-price-range"
+                onchange="this.title=this.value;onSetFilterBy({maxPrice: this.value})" />
+        </label>
+        <label>
+            Min rate:
+            <input type="range" min="0" max="10" value="0" class="filter-rate-range"
+                onchange="this.title=this.value;onSetFilterBy({minRate: this.value})" />
+        </label>
+    </section>
+
+    <section class="main-contant">
+        <table class="books-table">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+    <button class="prev-page" onclick="onPrevPage()">Previous page</button>
+    <button class="next-page" onclick="onNextPage()">Next page</button>
+    <div class="modal">
+        <button class="close-modal" onclick="onCloseModal()">X</button>
+        <h3>Title: <span></span></h3>
+        <h4>Price: <span></span> </h4>
+        <h5>Book's Summery:</h5>
+        <div class="rate"> Please rate the book from 1-10 <br>
+            <button class="rate-down" onclick="onRateDown()">-</button><span>&nbsp0&nbsp</span>
+            <button class="rate-up" onclick="onRateUp()">+</button>
+        </div>
+        <p></p>
+
+        <script src="js/services/storage.service.js"></script>
+        <script src="js/services/utils.service.js"></script>
+        <script src="js/services/books.service.js"></script>
+        <script src="js/main.controller.js"></script>
+</body>
+
+</html>
