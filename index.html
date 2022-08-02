@@ -5,54 +5,84 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
     <title>Book Shop</title>
 </head>
 
 <body onload="onInit()">
-    <h1>Book Shop</h1>
-    <button class="add-book" onclick="onAddBook()">Create new book</button>
+    <h1 data-trans="title">Book Shop</h1>
+    <button class="add-book" data-trans="add-book" onclick="onAddBook()">Create new book</button>
     <!-- <form onsubmit="onAddBook(event)">
         <input type="text" name="add-book" placeholder="Book's name?" />
         <button>Add</button>
     </form> -->
     <section class="filter">
-        <h2>Filter</h2>
+        <h2 data-trans="filter">Filter</h2>
+        <select onchange="onSetLang(this.value)">
+            <option value="en">English</option>
+            <option value="he">עברית</option>
+        </select>
         <form onsubmit="onSearchAdd(event)">
-            <input type="text" name="book-search" placeholder="Search Book" />
-            <button>Search</button>
+            <input type="text" data-trans="book-search" name="book-search" placeholder="Search Book" />
+            <button data-trans="book-search">Search</button>
         </form>
-        <label>
-            Max Price:
-            <input type="range" min="0" max="100" value="50" class="filter-price-range"
+        <label data-trans="max-price" for="maxprice"> Max Price:</label>
+           
+            <input id="maxprice" type="range" min="0" max="100" value="50"  class="filter-price-range"
                 onchange="this.title=this.value;onSetFilterBy({maxPrice: this.value})" />
-        </label>
-        <label>
-            Min rate:
-            <input type="range" min="0" max="10" value="0" class="filter-rate-range"
+      
+        <label data-trans="min-rate" for="minrate">Min rate:</label>
+            
+            <input id="minrate" type="range" min="0" max="10" value="0"  class="filter-rate-range"
                 onchange="this.title=this.value;onSetFilterBy({minRate: this.value})" />
-        </label>
+        
     </section>
 
     <section class="main-contant">
-        <table class="books-table">
-            <thead></thead>
-            <tbody></tbody>
+        <table class="table books-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th data-trans="book-title" scope="col" onclick="onSetSortBy(this)">TITLE</th>
+                    <th data-trans="book-price" scope="col" onclick="onSetSortBy(this)">PRICE</th>
+                    <th data-trans="actions" scope="col" colspan="3">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider"></tbody>
         </table>
     </section>
-    <button class="prev-page" onclick="onPrevPage()">Previous page</button>
-    <button class="next-page" onclick="onNextPage()">Next page</button>
-    <div class="modal">
-        <button class="close-modal" onclick="onCloseModal()">X</button>
-        <h3>Title: <span></span></h3>
-        <h4>Price: <span></span> </h4>
-        <h5>Book's Summery:</h5>
-        <div class="rate"> Please rate the book from 1-10 <br>
-            <button class="rate-down" onclick="onRateDown()">-</button><span>&nbsp0&nbsp</span>
-            <button class="rate-up" onclick="onRateUp()">+</button>
-        </div>
-        <p></p>
+    <!-- <button  class="btn btn-outline-primary">Primary</button> -->
+    <button type="button" class="btn btn-light prev-page" data-trans="prev-pg" onclick="onPrevPage()" >Previous page</button>
+    <button type="button" class="btn btn-light next-page" data-trans="next-pg" onclick="onNextPage()">Next page</button>
 
+        <div class="my-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <div class="modal-title" id="exampleModalLabel">
+                    <h3><span data-trans="book-title">Title:</span> <span class="modal-title"></span></h3>
+                    <h4 ><span data-trans="book-price">Price:</span> <span class="modal-price"></span> </h4>
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="onCloseModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 data-trans="book-sum">Book's Summery:</h5>
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <div  class="rate">
+                        <span data-trans="book-rate">Please rate the book from 1-10</span><br>
+                  <button type="button" class="btn btn-secondary rate-down" onclick="onRateDown()">-</button><span class="modal-rate"></span>
+                  <button type="button" class="btn btn-primary rate-up" onclick="onRateUp()">+</button>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>  
+       
+        <script src="lib/bootstrap/bootstrap.bundel.js"></script>
+        <script src="js/services/i18n.service.js"></script>
         <script src="js/services/storage.service.js"></script>
         <script src="js/services/utils.service.js"></script>
         <script src="js/services/books.service.js"></script>
