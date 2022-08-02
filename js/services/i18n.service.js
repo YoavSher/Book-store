@@ -9,9 +9,13 @@ const gTrans = {
         en: 'Filter',
         he: 'סנן'
     },
-    'add-book': {
-        en: 'Add book',
-        he: 'הוסף ספר'
+    'add-bookName': {
+        en: 'Add book name',
+        he: 'הוסף שם ספר'
+    },
+    'add-bookPrice': {
+        en: 'Add book price',
+        he: 'הוסף מחיר לספר'
     },
     'book-search': {
         en: 'Search',
@@ -25,20 +29,20 @@ const gTrans = {
         en: 'Min rate',
         he: 'דירוג מינימלי'
     },
-    'prev-pg': {
-        en: 'Previous page',
-        he: 'הדף הקודם'
-    },
-    'next-pg': {
-        en: 'Next page',
-        he: 'הדף הבא'
-    },
+    // 'prev-pg': {
+    //     en: 'Previous page',
+    //     he: 'הדף הקודם'
+    // },
+    // 'next-pg': {
+    //     en: 'Next page',
+    //     he: 'הדף הבא'
+    // },
     'book-title': {
         en: 'Title:',
         he: 'שם הספר:'
     },
     'book-price': {
-        en: 'Price:',
+        en: 'Price',
         he: 'מחיר:'
     },
     'book-sum': {

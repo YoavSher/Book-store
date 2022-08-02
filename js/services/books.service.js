@@ -14,11 +14,11 @@ _createBooks()
 
 function getBooksForDisplay() {
 
-    if (gFilterBy.title !== '') var books = gBooks.filter(book => book.title.includes(gFilterBy.title))
-    else {
-        books = gBooks.filter(book => book.price <= gFilterBy.maxPrice &&
-            book.rate >= gFilterBy.minRate)
-    }
+    // if (gFilterBy.title !== '') var books = gBooks.filter(book => book.title.includes(gFilterBy.title))
+    // else {
+    var books = gBooks.filter(book => book.price <= gFilterBy.maxPrice &&
+        book.rate >= gFilterBy.minRate && book.title.includes(gFilterBy.title))
+    // }
     gFilterBy.title = ''
     const startIdx = gPageIdx * PAGE_SIZE
     books = books.slice(startIdx, startIdx + PAGE_SIZE)
@@ -60,10 +60,10 @@ function getBookRate(bookId) {
 }
 
 function setBookSort(sortBy) {
-    // console.log('sortBy:', sortBy)
     const sort = sortBy.innerText.toLowerCase()
+    console.log('sort:', sort)
     if (sort === '') return
-    if (sort === 'title') gBooks.sort((b1, b2) => b1.title.localeCompare(b2.title))
+    if (sort === 'title:') gBooks.sort((b1, b2) => b1.title.localeCompare(b2.title))
     else gBooks.sort((b1, b2) => (b1[sort] - b2[sort]))
     console.log('gFilterBy:', gFilterBy)
     console.log('gBooks:', gBooks)
@@ -78,8 +78,8 @@ function setBooksFilter(filterBy = {}) {
 }
 
 function nextPage() {
-// console.log('gBooks.length:', gBooks.length)
-    if (!((gPageIdx+1) * PAGE_SIZE > gBooks.length)) {
+    // console.log('gBooks.length:', gBooks.length)
+    if (!((gPageIdx + 1) * PAGE_SIZE > gBooks.length)) {
         gPageIdx++
         console.log('gPageIdx:', gPageIdx)
         return
@@ -91,6 +91,11 @@ function prevPage() {
         gPageIdx--
         console.log('gPageIdx:', gPageIdx)
     }
+}
+
+function goToPage(pageNum) {
+    var page = pageNum.innerText
+    gPageIdx = page - 1
 }
 
 

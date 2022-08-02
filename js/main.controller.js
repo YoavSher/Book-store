@@ -3,9 +3,10 @@
 console.log('hi');
 
 function onInit() {
-    renderBooks()
-    renderFilterByQueryStringParams()
     doTrans()
+    renderBooks()
+    renderPageBtns()
+    renderFilterByQueryStringParams()
 }
 
 
@@ -25,7 +26,7 @@ function renderBooks() {
     document.querySelector('.books-table tbody').innerHTML = strHtml
     // console.log('im render');
     if (gPageIdx === 0) {
-        document.querySelector('.prev-page').setAttribute('disabled','')
+        document.querySelector('.prev-page').setAttribute('disabled', '')
     }
 }
 
@@ -36,13 +37,18 @@ function onRemoveBook(bookId) {
 }
 
 function onAddBook(ev) {
-    // ev.preventDefault()
-    const name = prompt(`Book's name?`)
-    if (name) {
-        var price = +prompt(`Book's price?`, getRandomIntInclusive(30, 100))
-        addBook(name, price)
-        renderBooks()
-    }
+    ev.preventDefault()
+    var bookTitle = document.querySelector('#bookName').value
+    var bookPrice = document.querySelector('#bookPrice').value
+    console.log('bookTitle:', bookPrice)
+    // const name = prompt(`Book's name?`)
+    // if (name) {
+    //     var price = +prompt(`Book's price?`, getRandomIntInclusive(30, 100))
+    addBook(bookTitle, bookPrice)
+    document.querySelector('#bookName').value = ''
+    document.querySelector('#bookPrice').value = ''
+    renderBooks()
+    // }
 }
 
 function onUpdateBook(bookId) {
@@ -61,7 +67,7 @@ function onReadBook(bookId) {
     elModal.querySelector('h3 .modal-title').innerText = book.title
     elModal.querySelector('h4 .modal-price').innerText = `${book.price}$`
     elModal.querySelector('p').innerText = makeLorem()
-   elModal.querySelector('.rate .modal-rate').innerText = ` ${book.rate} `
+    elModal.querySelector('.rate .modal-rate').innerText = ` ${book.rate} `
     gRate = +elModal.querySelector('.rate .modal-rate').innerText
     // elModal.classList.add('open')
     console.log('book.id:', book.id)
@@ -91,7 +97,7 @@ function onRateDown() {
 function onRateUp() {
     const book = getBookById(gId)
     const elRate = document.querySelector('.modal-footer .rate .modal-rate')
-console.log('elRate.innerText:', elRate.innerText)
+    console.log('elRate.innerText:', elRate.innerText)
     console.log('book.rate:', book.rate)
     if (gRate < 10) {
         gRate += 1
@@ -103,7 +109,7 @@ console.log('elRate.innerText:', elRate.innerText)
 
 function onSetSortBy(sortBy) {
     // console.log('sortBy:', sortBy)
-
+    console.log('sortBy:', sortBy.innerText)
     setBookSort(sortBy)
     renderBooks()
 
@@ -113,26 +119,26 @@ function onSetFilterBy(filterBy) {
     filterBy = setBooksFilter(filterBy)
     renderBooks()
 
-    const queryStringParams = `?maxPrice=${filterBy.maxPrice}&minRate=${filterBy.minRate}`
+    const queryStringParams = `?maxPrice=${filterBy.maxPrice}&minRate=${filterBy.minRate}&title=${filterBy.title}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
-function onSearchAdd(ev) {
-    ev.preventDefault()
-    const elTxt = document.querySelector('[name=book-search]')
-    if (elTxt.value === '') return
-    else {
-        var filterBy = { title: elTxt.value }
-        setBooksFilter(filterBy)
-        renderBooks()
-        // console.log('filterBy:', filterBy)
-        elTxt.value = ''
-    }
-    const queryStringParams = `?title=${filterBy.title}`
-    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
-    window.history.pushState({ path: newUrl }, '', newUrl)
-}
+// function onSearchAdd(ev) {
+//     ev.preventDefault()
+//     const elTxt = document.querySelector('[name=book-search]')
+//     if (elTxt.value === '') return
+//     else {
+//         var filterBy = { title: elTxt.value }
+//         setBooksFilter(filterBy)
+//         renderBooks()
+//         // console.log('filterBy:', filterBy)
+//         elTxt.value = ''
+//     }
+//     const queryStringParams = `?title=${filterBy.title}`
+//     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
+//     window.history.pushState({ path: newUrl }, '', newUrl)
+// }
 
 function renderFilterByQueryStringParams() {
     const queryStringParams = new URLSearchParams(window.location.search)
@@ -154,9 +160,9 @@ function renderFilterByQueryStringParams() {
 
 function onNextPage() {
     nextPage()
-    if (Math.floor(gBooks.length / PAGE_SIZE) <= gPageIdx) {
-        console.log('gPageIdx:', gPageIdx)
-        document.querySelector('.next-page').setAttribute('disabled','')
+    var pageIdx = gPageIdx + 1
+    if (PAGE_SIZE * pageIdx >= gBooks.length) {
+        document.querySelector('.next-page').setAttribute('disabled', '')
     } else {
         document.querySelector('.next-page').removeAttribute('disabled')
         document.querySelector('.prev-page').removeAttribute('disabled')
@@ -175,8 +181,38 @@ function onPrevPage() {
 
 function onSetLang(lang) {
     setLang(lang)
-    if (lang === 'he') document.body.classList.add('rtl') 
+    if (lang === 'he') document.body.classList.add('rtl')
     else document.body.classList.remove('rtl')
     doTrans()
+    renderBooks()
+}
+
+function renderPageBtns() {
+
+    const btnsNums = gBooks.length / PAGE_SIZE
+    const elPageNum = document.querySelector('.pageBtn')
+    console.log('elPageNum:', elPageNum)
+    var strHtml = ''
+    for (var i = 1; i <= btnsNums; i++) {
+        strHtml += `<button type="button" class="btn btn-light curr-page"  onclick=onGoTopage(this)>${i}</button>`
+    }
+    // console.log('strHtml:', strHtml)
+
+    elPageNum.innerHTML = strHtml
+}
+
+function onGoTopage(pageNum) {
+    
+    if (PAGE_SIZE * pageNum.innerText >= gBooks.length) {
+        document.querySelector('.next-page').setAttribute('disabled', '')
+    } else {
+        document.querySelector('.next-page').removeAttribute('disabled')
+        document.querySelector('.prev-page').removeAttribute('disabled')
+    }
+    if (gPageIdx === 0) {
+        document.querySelector('.prev-page').removeAttribute('disabled')
+        document.querySelector('.next-page').removeAttribute('disabled')
+    }
+    goToPage(pageNum)
     renderBooks()
 }

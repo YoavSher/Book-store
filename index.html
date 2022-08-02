@@ -12,21 +12,28 @@
 
 <body onload="onInit()">
     <h1 data-trans="title">Book Shop</h1>
-    <button class="add-book" data-trans="add-book" onclick="onAddBook()">Create new book</button>
-    <!-- <form onsubmit="onAddBook(event)">
-        <input type="text" name="add-book" placeholder="Book's name?" />
-        <button>Add</button>
-    </form> -->
+    <!-- <button class="add-book" data-trans="add-book" onclick="onAddBook()">Create new book</button> -->
+
+    <form class="add-book">
+        <label for="bookName" ></label><br>
+        <input name="bookName" data-trans="add-bookName" type="txt" id="bookName" placeholder="Book name here" required />
+        <br>
+        <label for="bookPrice" ></label><br>
+        <input name="bookPrice" data-trans="add-bookPrice" type="txt" id="bookPrice" placeholder="What is the price?" required />
+        <br>
+        <button type="submit" class="btn btn-primary btn-add-book" onclick="onAddBook(event)">Add new Book!</button>
+      </form>
+
     <section class="filter">
         <h2 data-trans="filter">Filter</h2>
         <select onchange="onSetLang(this.value)">
             <option value="en">English</option>
             <option value="he">עברית</option>
-        </select>
-        <form onsubmit="onSearchAdd(event)">
-            <input type="text" data-trans="book-search" name="book-search" placeholder="Search Book" />
-            <button data-trans="book-search">Search</button>
-        </form>
+        </select><br>
+        <!-- <form onsubmit="onSearchAdd(event)"> -->
+            <input type="text" data-trans="book-search" name="book-search" placeholder="Search Book" onkeyup="onSetFilterBy({title: this.value})" />
+            <!-- <button data-trans="book-search">Search</button> -->
+        <!-- </form> -->
         <label data-trans="max-price" for="maxprice"> Max Price:</label>
            
             <input id="maxprice" type="range" min="0" max="100" value="50"  class="filter-price-range"
@@ -53,8 +60,11 @@
         </table>
     </section>
     <!-- <button  class="btn btn-outline-primary">Primary</button> -->
-    <button type="button" class="btn btn-light prev-page" data-trans="prev-pg" onclick="onPrevPage()" >Previous page</button>
-    <button type="button" class="btn btn-light next-page" data-trans="next-pg" onclick="onNextPage()">Next page</button>
+    <button type="button" class="btn btn-light prev-page"  onclick="onPrevPage()" >&lt</button>
+    <div class="pageBtn"></div>
+    <button type="button" class="btn btn-light next-page"  onclick="onNextPage()">&gt</button>
+    <!-- <button type="button" class="btn btn-light prev-page" data-trans="prev-pg" onclick="onPrevPage()" >Previous page</button>
+    <button type="button" class="btn btn-light next-page" data-trans="next-pg" onclick="onNextPage()">Next page</button> -->
 
         <div class="my-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
